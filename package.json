@@ -1,0 +1,19 @@
+{
+  "name": "focus_manager",
+  "version": "1.0.0",
+  "description": "Welcome to the Focus Manager!",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pthain/FocusManager.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pthain/FocusManager/issues"
+  },
+  "homepage": "https://github.com/pthain/FocusManager#readme"
+}
