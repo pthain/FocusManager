@@ -7,4 +7,19 @@
   <body>
       <p>Hello World</p>
   </body>
+  <script>
+    //Get body
+    //Add event listener to body: 'click', () => {
+    console.log("Script begin")
+    document.documentElement.addEventListener('click', () => {
+      console.log("Click event begin")
+      //document.body.innerText = "Hey! "
+      console.log(document.body.innerText)
+      newText = document.createTextNode("Please don't touch anything.")
+      document.body.append(newText)
+      document.body.append(document.createElement("br"))
+    })
+    //Switch html
+    //}
+  </script>
 </html>
