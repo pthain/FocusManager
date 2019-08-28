@@ -19,7 +19,9 @@ function createWindow () {
 
 app.on('ready', createWindow)
 
-function newProjectPopup() {
+/*
+//Action when form is clicked
+function newProject_ClickHandler() {
   console.log("ipc message received")
   dialog.showMessageBox(win, {
     type: "info",
@@ -29,4 +31,5 @@ function newProjectPopup() {
   })
 }
 
-ipcMain.on('alert-message', newProjectPopup)
+ipcMain.on('alert-message', newProject_ClickHandler)
+*/
