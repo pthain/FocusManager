@@ -1,5 +1,5 @@
 const electron = require('electron')
-const {app, dialog, ipcMain, BrowserWindow } = require('electron')
+const {app, dialog, BrowserWindow } = require('electron')
 
 let win
 
@@ -12,7 +12,7 @@ function createWindow () {
     }
   })
 
-  win.loadFile('index.html')
+  win.loadURL(`file://${__dirname}/index.html`)
 
   win.on('closed', function () {
     win = null
