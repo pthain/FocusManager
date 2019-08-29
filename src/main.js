@@ -5,7 +5,7 @@ let win
 
 function createWindow () {
   win = new BrowserWindow({
-    width: 800,
+    width: 1200,
     height: 600,
     webPreferences: {
       nodeIntegration: true
@@ -15,7 +15,7 @@ function createWindow () {
   win.loadURL(`file://${__dirname}/index.html`)
 
   win.on('closed', function () {
-    win = null
+    app.quit()
   })
 
   win.webContents.openDevTools()
