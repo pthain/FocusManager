@@ -3,7 +3,7 @@
   "productName": "focus-manager",
   "version": "1.0.0",
   "description": "Desktop application for managing projects and productivity.",
-  "main": "src/main.js",
+  "main": "main.js",
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",

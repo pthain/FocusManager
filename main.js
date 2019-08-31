@@ -12,7 +12,7 @@ function createWindow () {
     }
   })
 
-  win.loadURL(`file://${__dirname}/index.html`)
+  win.loadURL(`file://${__dirname}/src/html/index.html`)
 
   win.on('closed', function () {
     app.quit()
