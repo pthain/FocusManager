@@ -45,6 +45,7 @@
     }
   },
   "dependencies": {
+    "bootstrap-css": "^4.0.0-alpha.5",
     "electron-squirrel-startup": "^1.0.0"
   },
   "devDependencies": {

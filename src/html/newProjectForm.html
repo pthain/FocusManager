@@ -10,13 +10,8 @@
       <input id="POST-proj-name" type="text" name="proj-name">
       <input id="POST-proj-submitBtn" type="button" value="Save">
     </form>
-    <script>
-      projSubmitBtn = document.getElementById('POST-proj-submitBtn')
-      projSubmitBtn.addEventListener('click', () => {
-        console.log("Project submitted.")
-        window.close()
-      })
-
-    </script>
   </body>
+  <script>
+    require('../js/newProjectForm.js')
+  </script>
 </html>
