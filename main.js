@@ -23,6 +23,7 @@ function createWindow () {
 
 app.on('ready', createWindow)
 
+//TODO: Abstract function to 'change-html-page' and 'open-window', takes in filepath.
 ipcMain.on('open-new-project-form', (e) => {
   const htmlPath = `file://${__dirname}/src/html/newProjectForm.html`
   let tmpWin = new BrowserWindow({
