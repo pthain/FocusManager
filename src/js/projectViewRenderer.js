@@ -15,9 +15,8 @@ addGoalListItem.addEventListener('click', () => {
   goalList.insertBefore(newGoal, addGoalListItem)
 })
 
-document.addEventListener('click', (e) => {
+document.addEventListener('dblclick', (e) => {
   if (e.target && e.target.id == 'goal-li') {
-      count = count - 1
       e.target.remove()
   }
 })
