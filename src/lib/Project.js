@@ -14,3 +14,12 @@ function Goal(parent, description) {
 function Task(goal, description) {
   // TODO: Implement Tasks
 }
+
+/*Class Factories*/
+function createProject(name) {
+  return new Project(name)
+}
+
+function createGoal(parent, description) {
+  return new Goal(parent, description)
+}
