@@ -39,6 +39,15 @@ ipcMain.on('open-new-project-form', (e) => {
   tmpWin.loadURL(`file://${__dirname}/src/html/newProjectForm.html`)
 })
 
-ipcMain.on('open-project-view', (e) => {
+ipcMain.on('open-project-view', (e, projName) => {
   win.loadURL(`file://${__dirname}/src/html/projectView.html`)
+  console.log(projName)
+  if (projName == null) {
+    projName = "Untitled"
+  }
+  win.setTitle(projName)
+
+  win.on('page-title-updated', (e) => {
+      e.preventDefault()
+  })
 })
