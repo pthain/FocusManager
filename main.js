@@ -42,7 +42,7 @@ ipcMain.on('open-new-project-form', (e) => {
 ipcMain.on('open-project-view', (e, projName) => {
   win.loadURL(`file://${__dirname}/src/html/projectView.html`)
   console.log(projName)
-  if (projName == null) {
+  if ((projName == null) || (projName == "")) {
     projName = "Untitled"
   }
   win.setTitle(projName)
