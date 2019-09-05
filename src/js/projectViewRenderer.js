@@ -17,7 +17,17 @@ addGoalListItem.addEventListener('click', () => {
 
 document.addEventListener('dblclick', (e) => {
   if (e.target && e.target.id == 'goal-li') {
+      //Remove goal from list
       e.target.remove()
+      //Reset goal-info-view
+      document.getElementById("goal-info-view").innerHTML='Goal info will appear here.'
+  }
+})
+
+document.addEventListener('click', (e) => {
+  if (e.target && e.target.id == 'goal-li') {
+      //Show goal's html in goal-info-view
+      document.getElementById("goal-info-view").innerHTML='<object type="text/html" data="../html/practice.html" ></object>'
   }
 })
 
@@ -28,10 +38,3 @@ function createGoal(goalNumber) {
   console.log(newGoal)
   return newGoal
 }
-
-//What I want to do
-
-/*
-  1. Create a new window
-  2. Do stuff with the new window
-*/
