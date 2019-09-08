@@ -15,45 +15,38 @@ addGoalListItem.addEventListener('click', () => {
   goalList.insertBefore(newGoal, addGoalListItem)
 })
 
-/*
-document.addEventListener('dblclick', (e) => {
-  if (e.target && e.target.id == 'goal-li') {
-      //Remove goal from list
-      e.target.remove()
-      //Reset goal-info-view
-      document.getElementById("goal-info-view").innerHTML='Goal info will appear here.'
-  }
-})
-
-document.addEventListener('click', (e) => {
-  if (e.target && e.target.id == 'goal-li') {
-      //Show goal's html in goal-info-view
-      document.getElementById("goal-info-view").innerHTML='<object type="text/html" data="../html/practice.html" ></object>'
-  }
-})
-*/
-
 function createGoal(goalNumber) {
   newGoal = document.createElement('li')
-  newGoal.innerHTML = 'Goal #' + goalNumber
-  newGoal.id = 'goal-li' //Necessary?
+  newGoalObj = 'Goal #' + goalNumber
   console.log(newGoal)
   //ToDo: newGoalObj = new getGoalInfo() {/*get goal info from user and ret obj*/}
-  //ToDo: htmlContent = createGoalMarkup(newGoalObj)
+  htmlContent = createGoalMarkup(newGoalObj)
+  newGoal.htmlContent = htmlContent
+  console.log(newGoal.htmlContent)
   //ToDo: displayHtmlContent(htmlContent) //Fill goal-li w/ generated content
-  //ToDo: create listeners
+  newGoal.innerHTML = newGoalObj
+
+
   //Mark goal as complete
   newGoal.addEventListener('dblclick', (e) => {
-    //Remove the goal
     e.target.remove()
     //Reset goal-info-view
     document.getElementById("goal-info-view").innerHTML='Goal info will appear here.'
   })
-  
-  document.addEventListener('click', (e) => {
-    document.getElementById("goal-info-view").innerHTML='<object type="text/html" data="../html/practice.html" ></object>'
+
+  //Load content for goal-info-view attached to this goal.
+  newGoal.addEventListener('click', (e) => {
+    document.getElementById("goal-info-view").innerHTML = e.target.htmlContent
   })
 
+  //TODO: Modify based on Goal content
+  /* Returns auto-generated HTML corresponding to the Goal object */
+  function createGoalMarkup(newGoalObj) {
+    //goalInfoDiv = document.createElement('div')
+    goalInfoText = '<h5>This field will display information about '+ newGoalObj + '</h5>'
+    //goalInfoDiv.appendChild(goalInfoText)
+    return goalInfoText
+    }
 
   return newGoal
 }
