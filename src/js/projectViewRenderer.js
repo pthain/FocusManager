@@ -4,6 +4,7 @@ const path = require('path')
 
 const goalList = document.getElementById('goal-list')
 const addGoalListItem = document.getElementById('add-goal-li')
+const goalInfoDiv = document.getElementById("goal-info-view")
 
 let count = 0
 
@@ -31,21 +32,28 @@ function createGoal(goalNumber) {
   newGoal.addEventListener('dblclick', (e) => {
     e.target.remove()
     //Reset goal-info-view
-    document.getElementById("goal-info-view").innerHTML='Goal info will appear here.'
+    goalInfoDiv.innerHTML='Goal info will appear here.'
   })
 
   //Load content for goal-info-view attached to this goal.
   newGoal.addEventListener('click', (e) => {
-    document.getElementById("goal-info-view").innerHTML = e.target.htmlContent
+    goalInfoDiv.innerHTML=''
+    goalInfoDiv.appendChild(e.target.htmlContent)
   })
 
   //TODO: Modify based on Goal content
   /* Returns auto-generated HTML corresponding to the Goal object */
   function createGoalMarkup(newGoalObj) {
     //goalInfoDiv = document.createElement('div')
-    goalInfoText = '<h5>This field will display information about '+ newGoalObj + '</h5>'
+    goalInfoText = 'This field will display information about '+ newGoalObj
+    goalInfoNode = document.createElement('div')
+
+    goalInfoNode.appendChild(document.createTextNode(goalInfoText))
+    goalInfoNode.appendChild(document.createElement('br'))
+    goalInfoNode.appendChild(document.createElement('br'))
+    goalInfoNode.appendChild(document.createTextNode("Now we're really doing it!"))
     //goalInfoDiv.appendChild(goalInfoText)
-    return goalInfoText
+    return goalInfoNode
     }
 
   return newGoal
