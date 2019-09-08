@@ -19,6 +19,9 @@ function createWindow () {
   })
 
   win.webContents.openDevTools()
+  win.webContents.on('did-finish-load', function() {
+    win.show()
+  })
 }
 
 app.on('ready', createWindow)
