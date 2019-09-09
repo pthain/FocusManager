@@ -1,14 +1,16 @@
 /*Class definitions*/
-function Project(name) {
+exports.project = function Project(name) {
   this.goals = []   //Each project has a list of goals
   this.name = name  //Each project has a name
 }
 
-function Goal(parent, description) {
-  this.parent = parent  //Project or Goal associated with this Goal
+exports.goal = function Goal(count, parent, title, info) {
+  this.count = count
+  this.gparent = parent  //Project or Goal associated with this Goal
   //this.tasks = []         //Each goal has a list of tasks
-  this.description = description  //Goal's description
-  this.completed = false
+  this.gtitle = title
+  this.ginfo = info  //Goal's description
+  this.gcompleted = false
 }
 
 function Task(goal, description) {
