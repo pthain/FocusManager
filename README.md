@@ -3,8 +3,6 @@ Welcome to the Focus Manager!
 
 This application is designed to help you set your goals, and decide how you will use your time to accomplish them!
 
-Note: This project is currently very early on in development, and its scope not yet fully defined.
-
 With the Focus Manager, you will be able to set long term and daily goals, as well create a "Brain Dump" to organize everything that's on your mind in the moment.
 
 Potential Features:
