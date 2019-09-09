@@ -21,6 +21,7 @@ function createGoal(goalNumber) {
   //Create the Goal as a list element
   newGoal = document.createElement('li')
   newGoalObj = getGoalInfo(goalNumber)
+  newGoal.gObj = newGoalObj
   newGoal.innerHTML = newGoalObj.gtitle
 
   //Prepare goal-info-view content
@@ -32,9 +33,21 @@ function createGoal(goalNumber) {
 
   //Mark goal as complete
   newGoal.addEventListener('dblclick', (e) => {
-    e.target.remove()
-    //Reset goal-info-view
-    goalInfoDiv.innerHTML='Goal info will appear here.'
+    gClicked = e.target
+    if (gClicked.gObj.gcompleted == false) {
+      gClicked.gObj.gcompleted = true
+      gClicked.classList.toggle("isComplete")
+    }
+    else {
+      gClicked.gObj.gcompleted = false
+      gClicked.classList.toggle("isComplete")
+    }
+    gClicked.htmlContent = createGoalMarkup(gClicked.gObj)
+    //Refresh goal-info-view
+    goalInfoDiv.innerHTML=''
+    goalInfoDiv.appendChild(gClicked.htmlContent)
+
+    //goalInfoDiv.innerHTML='Goal info will appear here.'
   })
 
   //Load content for goal-info-view attached to this goal.
