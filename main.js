@@ -50,8 +50,22 @@ app.on('ready', createPrimaryWindow)
 
 /** Create a form to obtain project data **/
 ipcMain.on('open-new-project-form', (e) => {
-  const htmlPath = `file://${__dirname}/src/html/newProjectForm.html`
+  htmlPath = `file://${__dirname}/src/html/newProjectForm.html`
   createInputWindow(htmlPath)
+})
+
+let projSender
+/** Create a form to obtain goal data **/
+ipcMain.on('open-new-goal-form', (e) => {
+  htmlPath = `file://${__dirname}/src/html/newGoalForm.html`
+  createInputWindow(htmlPath)
+  projSender = e.sender
+  //event.returnValue = myNewGoalObject ?
+})
+
+ipcMain.on('goal-submit', (e, data) {
+  console.log('This is the goal data: ' + data)
+  projSender.send('send-goal-object', data)
 })
 
 /** Updates the primaryWin to display the selected project **/

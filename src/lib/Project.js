@@ -4,8 +4,8 @@ exports.project = function Project(name) {
   this.name = name  //Each project has a name
 }
 
-exports.goal = function Goal(count, parent, title, info) {
-  this.count = count
+exports.goal = function Goal(id, parent, title, info) {
+  this.id = id
   this.gparent = parent  //Project or Goal associated with this Goal
   //this.tasks = []         //Each goal has a list of tasks
   this.gtitle = title

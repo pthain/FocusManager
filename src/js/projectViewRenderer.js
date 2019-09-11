@@ -1,5 +1,5 @@
 const {BrowserWindow, dialog} = require('electron').remote
-//const {ipcRenderer} = require('electron');
+const {ipcRenderer} = require('electron');
 const path = require('path')
 const project = require('../lib/Project.js')
 
@@ -7,15 +7,15 @@ const goalList = document.getElementById('goal-list')
 const addGoalListItem = document.getElementById('add-goal-li')
 const goalInfoDiv = document.getElementById("goal-info-view")
 
-let count = 0 //Number of Goals created
+let id = 0 //Number of Goals created
 
 /****************
   Add a new goal
 *****************/
 addGoalListItem.addEventListener('click', () => {
   console.log("Adding a new goal ...")
-  count = count + 1
-  gListItem = createGoal(count)
+  id = id + 1
+  gListItem = createGoal(id)
   goalList.insertBefore(gListItem, addGoalListItem) //Insert goal li into ul
 })
 
@@ -27,6 +27,11 @@ addGoalListItem.addEventListener('click', () => {
   Returns a <li> containing the goal's title
 *************************************************/
 function createGoal(goalNumber) {
+  /*
+    hypothesis:
+    Create the new window form then do nothing.
+    When the new window form sends the IPC call, do goal creation there.
+  */
   gListItem = document.createElement('li')
   gObj = getGoalInfo(goalNumber)    //Create a goal object
   gListItem.gObj = gObj             //Attach object to this listItem
@@ -64,13 +69,21 @@ function createGoal(goalNumber) {
 }
 
 /*************************************************************************
-  Wrapper for Goal Constructor. Retrieves and TODO: Sanitizes user input
+  Wrapper for Goal Constructor. Creates a new Window to retrieve user input.
 **************************************************************************/
-function getGoalInfo(count) {
+function getGoalInfo(id) {
   //Open ... modal window?
   //Create a whole new goal form a la newProjectForm? Kind of want do away w/interval
   //Use bootstrap to create something?
-  return new project.goal(count, 'thisProject',  'Goal #' + count, 'Here\'s some info')
+
+  //IPC call to main -> create a form and retrieve the info
+  //It is synchronized so this process should HALT until a response is recv'
+  //What if the user closes the window?
+  //userGoal = ipcrenderer.sendSync('open-new-goal-form')
+  ipcrenderer.send('open-new-goal-form')
+
+  var projectTitle, title, info
+  return new project.goal(id, 'thisProject',  'Goal #' + id, 'Here\'s some info')
 }
 
 /*****************************************************************
