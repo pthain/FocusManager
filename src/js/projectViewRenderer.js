@@ -51,11 +51,7 @@ function createGoal(goalNumber) {
     }
     //Update HTML and refresh the goal-view
     gClicked.htmlContent = createGoalMarkup(gClicked.gObj)
-    //goalInfoDiv.innerHTML=''
-    //goalInfoDiv.appendChild(gClicked.htmlContent)
     updateGoalView(gClicked.htmlContent)
-
-    //goalInfoDiv.innerHTML='Goal info will appear here.'
   })
 
   /* Load content for goal-info-view attached to this goal. */
@@ -63,14 +59,17 @@ function createGoal(goalNumber) {
     updateGoalView(e.target.htmlContent)
   })
 
+  //Return a <li> element that contains reference to htmlcontent and goal object
   return gListItem
-
 }
 
-/******************************
-  Wrapper for Goal Constructor
-*******************************/
+/*************************************************************************
+  Wrapper for Goal Constructor. Retrieves and TODO: Sanitizes user input
+**************************************************************************/
 function getGoalInfo(count) {
+  //Open ... modal window?
+  //Create a whole new goal form a la newProjectForm? Kind of want do away w/interval
+  //Use bootstrap to create something?
   return new project.goal(count, 'thisProject',  'Goal #' + count, 'Here\'s some info')
 }
 
