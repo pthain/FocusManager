@@ -54,7 +54,8 @@ ipcMain.on('open-new-project-form', (e) => {
   createInputWindow(htmlPath)
 })
 
-let projSender
+let projSender  //The original sender who requested goal info (projectViewRenderer.js)
+
 /** Create a form to obtain goal data **/
 ipcMain.on('open-new-goal-form', (e) => {
   htmlPath = `file://${__dirname}/src/html/newGoalForm.html`
@@ -63,7 +64,7 @@ ipcMain.on('open-new-goal-form', (e) => {
   //event.returnValue = myNewGoalObject ?
 })
 
-ipcMain.on('goal-submit', (e, data) {
+ipcMain.on('goal-submit', (e, data) => {
   console.log('This is the goal data: ' + data)
   projSender.send('send-goal-object', data)
 })

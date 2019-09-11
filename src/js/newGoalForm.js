@@ -8,4 +8,5 @@ goalName = document.getElementById('POST-goal-name')
 /** TODO: Create a goal object, Send to primaryWin, update primaryWin view **/
 goalForm.addEventListener('submit', () => {
     ipcRenderer.send('goal-submit', goalName.value)
+    window.close()
 })

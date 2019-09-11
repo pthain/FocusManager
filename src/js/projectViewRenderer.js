@@ -1,5 +1,5 @@
 const {BrowserWindow, dialog} = require('electron').remote
-const {ipcRenderer} = require('electron');
+const {ipcRenderer} = require('electron')
 const path = require('path')
 const project = require('../lib/Project.js')
 
@@ -9,16 +9,35 @@ const goalInfoDiv = document.getElementById("goal-info-view")
 
 let id = 0 //Number of Goals created
 
-/****************
-  Add a new goal
-*****************/
+/***************************
+  Ask user for goal info
+****************************/
+addGoalListItem.addEventListener('click', (e) => {
+  console.log("Requesting Goal info from user...")
+  //Create a window form to retrieve user input.
+  //If something goes wrong i.e. user closes window, do nothing.
+  ipcRenderer.send('open-new-goal-form')
+})
+/*
 addGoalListItem.addEventListener('click', () => {
   console.log("Adding a new goal ...")
   id = id + 1
   gListItem = createGoal(id)
   goalList.insertBefore(gListItem, addGoalListItem) //Insert goal li into ul
 })
+*/
 
+/***************************************************
+  Listens for the main process to send goal-info
+***************************************************/
+
+ipcRenderer.on('send-goal-object', (e, data) => {
+  console.log('User submitted data:', data)
+  console.log("Adding a new goal ...")
+  id = id + 1
+  gListItem = createGoal(id, data)
+  goalList.insertBefore(gListItem, addGoalListItem) //Insert goal li into ul
+})
 
 /************************************************
   Gets input from user to create a Goal
@@ -26,12 +45,20 @@ addGoalListItem.addEventListener('click', () => {
   HTML content is created based off the values of the object
   Returns a <li> containing the goal's title
 *************************************************/
-function createGoal(goalNumber) {
+function createGoal(id, data) {
+  gListItem = document.createElement('li')
+  gObj = buildGoalObject(id, data)
+  gListItem.gObj = gObj             //Attach object to this listItem
+  gListItem.innerHTML = gListItem.gObj.gtitle
+
+  //Prepare goal-info-view content
+  gListItem.htmlContent = createGoalMarkup(gListItem.gObj)
+
   /*
     hypothesis:
-    Create the new window form then do nothing.
+    Create the new window form then do nothing. DONE
     When the new window form sends the IPC call, do goal creation there.
-  */
+
   gListItem = document.createElement('li')
   gObj = getGoalInfo(goalNumber)    //Create a goal object
   gListItem.gObj = gObj             //Attach object to this listItem
@@ -39,6 +66,7 @@ function createGoal(goalNumber) {
 
   //Prepare goal-info-view content
   gListItem.htmlContent = createGoalMarkup(gListItem.gObj)
+  */
 
   /************************************************/
   /*** LISTENER FUNCTIONS ATTACHED TO THIS GOAL ***/
@@ -71,6 +99,11 @@ function createGoal(goalNumber) {
 /*************************************************************************
   Wrapper for Goal Constructor. Creates a new Window to retrieve user input.
 **************************************************************************/
+function buildGoalObject(id, data) {
+  return new project.goal(id, 'thisProject',  data, 'Here\'s some info')
+}
+
+/*
 function getGoalInfo(id) {
   //Open ... modal window?
   //Create a whole new goal form a la newProjectForm? Kind of want do away w/interval
@@ -85,7 +118,7 @@ function getGoalInfo(id) {
   var projectTitle, title, info
   return new project.goal(id, 'thisProject',  'Goal #' + id, 'Here\'s some info')
 }
-
+*/
 /*****************************************************************
   Returns auto-generated HTML corresponding to the Goal object
 ******************************************************************/
