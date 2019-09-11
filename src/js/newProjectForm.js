@@ -2,17 +2,17 @@ const {BrowserWindow, app} = require('electron').remote
 const {ipcRenderer} = require('electron')
 const path = require('path')
 
-projSubmitBtn = document.getElementById('POST-proj-submitBtn')
+projForm = document.getElementById('POST-proj-form')
 projName = document.getElementById('POST-proj-name')
 console.log(projName.value)
-projSubmitBtn.addEventListener('click', () => {
-  console.log("Opening a new project...")
 
+/** TODO: Create a project object, Send to primaryWin, update primaryWin view **/
+projForm.addEventListener('submit', () => {
   if (projName.value == null) {
-    ipcRenderer.send('open-project-view', "Untitled")
+    ipcRenderer.send('update-project-view', "Untitled")
   }
   else {
-    ipcRenderer.send('open-project-view', projName.value)
+    ipcRenderer.send('update-project-view', projName.value)
     window.close()
   }
 })

@@ -1,10 +1,16 @@
 const electron = require('electron')
 const {app, dialog, BrowserWindow, ipcMain} = require('electron')
 
-let win
+let primaryWin
 
-function createWindow () {
-  win = new BrowserWindow({
+/**************************************************************************
+  Create Primary Window.
+  Contains the following views:
+  NoProject.html    //If no project has been selected, show this page
+  ProjectView.html  //Shows the contents of a current project
+****************************************************************************/
+function createPrimaryWindow () {
+  primaryWin = new BrowserWindow({
     width: 1200,
     height: 600,
     webPreferences: {
@@ -12,45 +18,52 @@ function createWindow () {
     }
   })
 
-  win.loadURL(`file://${__dirname}/src/html/index.html`)
+  primaryWin.loadURL(`file://${__dirname}/src/html/index.html`)
 
-  win.on('closed', function () {
+  primaryWin.on('closed', function () {
     app.quit()
   })
 
-  win.webContents.openDevTools()
-  win.webContents.on('did-finish-load', function() {
-    win.show()
-  })
+  primaryWin.webContents.openDevTools()
 }
 
-app.on('ready', createWindow)
-
-ipcMain.on('open-new-project-form', (e) => {
-  const htmlPath = `file://${__dirname}/src/html/newProjectForm.html`
-  let tmpWin = new BrowserWindow({
+/**************************************************************************
+  Create Input Window.
+  Contains the following views:
+  newProjectForm.html    //If no project has been selected, show this page
+  newGoalForm.html  //Shows the contents of a current project
+****************************************************************************/
+function createInputWindow(htmlPath) {
+  console.log("new input window")
+  let inputWin = new BrowserWindow({
     width: 600,
     height: 200,
     webPreferences: {
       nodeIntegration: true
     }
   })
+  inputWin.loadURL(htmlPath)
+  inputWin.show()
+}
 
-  tmpWin.on('close', () => {tmpWin = null})
-  tmpWin.loadURL(htmlPath)
-  tmpWin.show()
-  tmpWin.loadURL(`file://${__dirname}/src/html/newProjectForm.html`)
+app.on('ready', createPrimaryWindow)
+
+/** Create a form to obtain project data **/
+ipcMain.on('open-new-project-form', (e) => {
+  const htmlPath = `file://${__dirname}/src/html/newProjectForm.html`
+  createInputWindow(htmlPath)
 })
 
-ipcMain.on('open-project-view', (e, projName) => {
-  win.loadURL(`file://${__dirname}/src/html/projectView.html`)
-  console.log(projName)
+/** Updates the primaryWin to display the selected project **/
+ipcMain.on('update-project-view', (e, projName) => {
+  //TODO: How to make projectView dynamic?
+  primaryWin.loadURL(`file://${__dirname}/src/html/projectView.html`)
   if ((projName == null) || (projName == "")) {
     projName = "Untitled"
   }
-  win.setTitle(projName)
+  primaryWin.setTitle(projName)
 
-  win.on('page-title-updated', (e) => {
+  primaryWin.on('page-title-updated', (e) => {
       e.preventDefault()
   })
 })
