@@ -18,7 +18,7 @@ function createPrimaryWindow () {
     }
   })
 
-  primaryWin.loadURL(`file://${__dirname}/src/html/index.html`)
+  primaryWin.loadURL(`file://${__dirname}/src/html/defaultProjectView.html`)
 
   primaryWin.on('closed', function () {
     app.quit()
@@ -54,24 +54,9 @@ ipcMain.on('open-new-project-form', (e) => {
   createInputWindow(htmlPath)
 })
 
-let projSender  //The original sender who requested goal info (projectViewRenderer.js)
-
-/** Create a form to obtain goal data **/
-ipcMain.on('open-new-goal-form', (e) => {
-  htmlPath = `file://${__dirname}/src/html/newGoalForm.html`
-  createInputWindow(htmlPath)
-  projSender = e.sender
-  //event.returnValue = myNewGoalObject ?
-})
-
-ipcMain.on('goal-submit', (e, data) => {
-  console.log('This is the goal data: ' + data)
-  projSender.send('send-goal-object', data)
-})
 
 /** Updates the primaryWin to display the selected project **/
 ipcMain.on('update-project-view', (e, projName) => {
-  //TODO: How to make projectView dynamic?
   primaryWin.loadURL(`file://${__dirname}/src/html/projectView.html`)
   if ((projName == null) || (projName == "")) {
     projName = "Untitled"
@@ -81,4 +66,24 @@ ipcMain.on('update-project-view', (e, projName) => {
   primaryWin.on('page-title-updated', (e) => {
       e.preventDefault()
   })
+})
+
+/****************
+  Goal creation
+*****************/
+let projSender  //The original sender who requested goal info (projectViewRenderer.js)
+
+/**
+  FROM: projectView.js
+  Create a form to obtain goal data
+**/
+ipcMain.on('open-new-goal-form', (e) => {
+  htmlPath = `file://${__dirname}/src/html/newGoalForm.html`
+  createInputWindow(htmlPath)
+  projSender = e.sender
+})
+
+/**Sends goal data to the project view**/
+ipcMain.on('goal-submit', (e, goalObj) => {
+  projSender.send('send-goal-object', goalObj)
 })

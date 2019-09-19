@@ -31,12 +31,12 @@ addGoalListItem.addEventListener('click', () => {
   Listens for the main process to send goal-info
 ***************************************************/
 
-ipcRenderer.on('send-goal-object', (e, data) => {
-  console.log('User submitted data:', data)
+ipcRenderer.on('send-goal-object', (e, goalObj) => {
+  console.log('User submitted data:', goalObj.gtitle)
   console.log("Adding a new goal ...")
-  id = id + 1
-  gListItem = createGoal(id, data)
+  gListItem = createGoalItem(goalObj)
   goalList.insertBefore(gListItem, addGoalListItem) //Insert goal li into ul
+  /*Plan: data => Goal object*/
 })
 
 /************************************************
@@ -45,10 +45,10 @@ ipcRenderer.on('send-goal-object', (e, data) => {
   HTML content is created based off the values of the object
   Returns a <li> containing the goal's title
 *************************************************/
-function createGoal(id, data) {
+function createGoalItem(goalObj) {
   gListItem = document.createElement('li')
-  gObj = buildGoalObject(id, data)
-  gListItem.gObj = gObj             //Attach object to this listItem
+  //gObj = buildGoalObject(id, data)
+  gListItem.gObj = goalObj
   gListItem.innerHTML = gListItem.gObj.gtitle
 
   //Prepare goal-info-view content
@@ -99,11 +99,12 @@ function createGoal(id, data) {
 /*************************************************************************
   Wrapper for Goal Constructor. Creates a new Window to retrieve user input.
 **************************************************************************/
+/*
 function buildGoalObject(id, data) {
   return new project.goal(id, 'thisProject',  data, 'Here\'s some info')
 }
 
-/*
+
 function getGoalInfo(id) {
   //Open ... modal window?
   //Create a whole new goal form a la newProjectForm? Kind of want do away w/interval
