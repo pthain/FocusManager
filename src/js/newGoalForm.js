@@ -6,10 +6,11 @@ const project = require('../lib/Project.js')
 
 goalForm = document.getElementById('POST-goal-form')
 goalName = document.getElementById('POST-goal-name')
+goalInfo = document.getElementById('POST-goal-info')
 
 /** TODO: Create a goal object, Send to primaryWin, update primaryWin view **/
 goalForm.addEventListener('submit', () => {
-    formData = [goalName.value]
+    formData = [goalName.value, goalInfo.value]
     goalObj = buildGoalObject(formData)
     //ipcRenderer.send('goal-submit', goalName.value)
     ipcRenderer.send('goal-submit', goalObj)
@@ -19,5 +20,5 @@ goalForm.addEventListener('submit', () => {
 let id = 0
 function buildGoalObject(formData) {
   id++
-  return new project.goal(id, 'thisProject',  formData[0], 'Here\'s some info')
+  return new project.goal(id, 'thisProject',  formData[0], formData[1])
 }

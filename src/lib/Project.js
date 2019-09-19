@@ -22,6 +22,6 @@ function createProject(name) {
   return new Project(name)
 }
 
-function createGoal(parent, description) {
-  return new Goal(parent, description)
+function createGoal(id, parent, title, description) {
+  return new goal(id, parent, title, description)
 }
